@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --buildsystem=meson
+
+# Disabling fluidsynth (MIDI) support due to dependency conflict triggering removal of `winehq-stable
+# Disabling mt32emu (Roland) support due to package not being available for Ubuntu
+CONFIGURE_ARGS := \
+	-Duse_fluidsynth=false \
+	-Duse_alsa=true \
+	-Duse_mt32emu=false \
+	-Duse_sdl2_net=true \
+	-Duse_slirp=true \
+	-Duse_opengl=true \
+	-Duse_xinput2=true \
+	-Duse_zlib_ng="sse2,ssse3,sse42" \
+	-Dper_page_w_or_x=enabled \
+	-Denable_debugger=none \
+	-Ddynamic_core=dyn-x86 \
+	-Dautovec_info=true
+
+export DH_VERBOSE = 0
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND = -Wall -pedantic
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(CONFIGURE_ARGS)
