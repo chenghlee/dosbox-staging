@@ -3,12 +3,11 @@
 %:
 	dh $@ --buildsystem=meson
 
-# Disabling fluidsynth (MIDI) support due to dependency conflict triggering removal of `winehq-stable
 # Disabling mt32emu (Roland) support due to package not being available for Ubuntu
 CONFIGURE_ARGS := \
-	-Duse_fluidsynth=false \
+	-Duse_fluidsynth=true \
 	-Duse_alsa=true \
-	-Duse_mt32emu=false \
+	-Duse_mt32emu=true \
 	-Duse_sdl2_net=true \
 	-Duse_slirp=true \
 	-Duse_opengl=true \
