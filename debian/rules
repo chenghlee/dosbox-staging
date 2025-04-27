@@ -3,8 +3,8 @@
 %:
 	dh $@ --buildsystem=meson
 
-# Disabling mt32emu (Roland) support due to package not being available for Ubuntu
 CONFIGURE_ARGS := \
+	--buildtype=release \
 	-Duse_fluidsynth=true \
 	-Duse_alsa=true \
 	-Duse_mt32emu=true \
